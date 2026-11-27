@@ -4,6 +4,9 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
+import androidx.compose.material3.Shapes
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
@@ -14,7 +17,7 @@ data class GlassColors(
     val border: Color,
     val highlight: Color,
     val blurRadius: Float = 24f,       // px — full effect API 31+
-    val cornerRadius: Float = 24f,     // dp
+    val cornerRadius: Float = 28f,     // dp
 )
 
 // API 31+ = full Liquid Glass; API 26–30 = flat fallback (blueprint §12 lock)
@@ -45,17 +48,27 @@ private val LightScheme = lightColorScheme(
     surface = LSurface,
     onBackground = LText,
     onSurface = LText,
+    surfaceVariant = Color(0xFFF1EBFF),
+    onSurfaceVariant = LTextDim,
 )
 
 private val DarkScheme = darkColorScheme(
-    primary = RpiBlue,
-    onPrimary = Color.White,
+    primary = Color(0xFF9D86FF),
+    onPrimary = Color(0xFF1F1B3A),
     secondary = RpiCyan,
     tertiary = RpiAmber,
     background = DBackground,
     surface = DSurface,
     onBackground = DText,
     onSurface = DText,
+    surfaceVariant = Color(0xFF2E2956),
+    onSurfaceVariant = DTextDim,
+)
+
+private val RpiShapes = Shapes(
+    small = RoundedCornerShape(16.dp),
+    medium = RoundedCornerShape(24.dp),
+    large = RoundedCornerShape(28.dp),
 )
 
 @Composable
@@ -69,6 +82,7 @@ fun LiquidGlassTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compo
         MaterialTheme(
             colorScheme = if (darkTheme) DarkScheme else LightScheme,
             typography = RpiTypography,
+            shapes = RpiShapes,
             content = content,
         )
     }

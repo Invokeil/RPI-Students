@@ -12,6 +12,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.graphics.Color
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -109,9 +112,17 @@ fun HomeScreen(onNavigate: (String) -> Unit) {
 
 @Composable
 private fun QuickAction(label: String, route: String, onNavigate: (String) -> Unit, modifier: Modifier = Modifier) {
-    Card(onClick = { onNavigate(route) }, modifier = modifier) {
-        Column(Modifier.padding(vertical = 14.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(label, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+    val palette = listOf(Color(0xFF6C4DFF), Color(0xFFFF6B6B), Color(0xFF2EC4A6), Color(0xFF3DA5FF), Color(0xFFFFB300), Color(0xFF6C4DFF))
+    val tint = palette[(label.hashCode() and 0x7fffffff) % palette.size]
+    val fg = if (tint == Color(0xFFFFB300)) Color(0xFF1F1B3A) else Color.White
+    Card(
+        onClick = { onNavigate(route) },
+        modifier = modifier,
+        shape = RoundedCornerShape(22.dp),
+        colors = CardDefaults.cardColors(containerColor = tint, contentColor = fg),
+    ) {
+        Column(Modifier.fillMaxWidth().height(72.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+            Text(label, style = MaterialTheme.typography.titleMedium, color = fg)
         }
     }
 }

@@ -49,8 +49,8 @@ fun SectionCard(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(20.dp))
-            .padding(16.dp)
+            .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(28.dp))
+            .padding(18.dp)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
@@ -65,8 +65,8 @@ fun SectionCard(
 fun StatChip(label: String, value: String, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
-            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(14.dp))
-            .padding(horizontal = 12.dp, vertical = 8.dp),
+            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(18.dp))
+            .padding(horizontal = 12.dp, vertical = 10.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(value, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
@@ -96,8 +96,8 @@ fun FocusBanner(daysLeft: Int, examName: String, modifier: Modifier = Modifier) 
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(if (urgent) c.alert else c.accent, RoundedCornerShape(16.dp))
-            .padding(14.dp),
+            .background(if (urgent) c.alert else c.accent, RoundedCornerShape(24.dp))
+            .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(if (urgent) "\uD83D\uDCCD" else "\u23F3", color = Color.White) // 📍 / ⏳
