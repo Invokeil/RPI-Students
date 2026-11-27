@@ -1,3 +1,7 @@
+import java.util.Properties
+import java.util.Base64
+import java.io.File
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -8,7 +12,7 @@ plugins {
 
 // local.properties-এ APPWRITE_ENDPOINT / APPWRITE_PROJECT_ID দিলে সেটা নিবে,
 // না দিলে default (sgp.cloud.appwrite.io) — app তবুও build হবে।
-val localProps = java.util.Properties().apply {
+val localProps = Properties().apply {
     val f = rootProject.file("local.properties")
     if (f.exists()) f.inputStream().use { load(it) }
 }
@@ -28,10 +32,10 @@ val ksPass: String? = System.getenv("KEYSTORE_PASSWORD")
 val ksAlias: String? = System.getenv("KEY_ALIAS")
 val ksKeyPass: String? = System.getenv("KEY_PASSWORD")
 val canSign = !keystoreB64.isNullOrBlank() && !ksPass.isNullOrBlank() && !ksAlias.isNullOrBlank() && !ksKeyPass.isNullOrBlank()
-val keystoreFile: java.io.File? = if (canSign && keystoreB64 != null) {
+val keystoreFile: File? = if (canSign && keystoreB64 != null) {
     rootProject.layout.buildDirectory.file("signing/release.keystore").get().asFile.also {
         it.parentFile.mkdirs()
-        it.writeBytes(java.util.Base64.getMimeDecoder().decode(keystoreB64))
+        it.writeBytes(Base64.getMimeDecoder().decode(keystoreB64))
     }
 } else null
 
