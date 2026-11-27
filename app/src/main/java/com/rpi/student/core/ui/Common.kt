@@ -134,52 +134,24 @@ private fun uPath(topY: Float, radius: Float): Path = Path().apply {
 fun RpiLoader(size: Dp = 96.dp, color: Color = Color(0xFF000000)) {
     val transition = rememberInfiniteTransition(label = "rpi_loader")
     // SVG keyframes: 0%→1.1, 40/60%→0, 100%→-1.1 (pathLength=1), cubic-bezier(.65,0,.35,1)≈FastOutSlowIn
-    val phases = listOf(
+    val phases = listOf(0, 180, 360).map { offset ->
         transition.animateFloat(
             initialValue = 1.1f,
+            targetValue = -1.1f,
             animationSpec = infiniteRepeatable(
                 animation = keyframes {
                     durationMillis = 2800
-                    0f at 0 using androidx.compose.animation.core.FastOutSlowInEasing
-                    0f at 1120
+                    1.1f at 0
+                    0f at 1120 using androidx.compose.animation.core.FastOutSlowInEasing
                     0f at 1680
-                    1.1f at 2800 using androidx.compose.animation.core.FastOutSlowInEasing
+                    -1.1f at 2800 using androidx.compose.animation.core.FastOutSlowInEasing
                 },
                 repeatMode = RepeatMode.Restart,
+                initialStartOffset = StartOffset(offset),
             ),
-            label = "p0",
-        ),
-        transition.animateFloat(
-            initialValue = 1.1f,
-            animationSpec = infiniteRepeatable(
-                animation = keyframes {
-                    durationMillis = 2800
-                    0f at 0 using androidx.compose.animation.core.FastOutSlowInEasing
-                    0f at 1120
-                    0f at 1680
-                    1.1f at 2800 using androidx.compose.animation.core.FastOutSlowInEasing
-                },
-                repeatMode = RepeatMode.Restart,
-            ),
-            initialStartOffset = StartOffset(180),
-            label = "p1",
-        ),
-        transition.animateFloat(
-            initialValue = 1.1f,
-            animationSpec = infiniteRepeatable(
-                animation = keyframes {
-                    durationMillis = 2800
-                    0f at 0 using androidx.compose.animation.core.FastOutSlowInEasing
-                    0f at 1120
-                    0f at 1680
-                    1.1f at 2800 using androidx.compose.animation.core.FastOutSlowInEasing
-                },
-                repeatMode = RepeatMode.Restart,
-            ),
-            initialStartOffset = StartOffset(360),
-            label = "p2",
-        ),
-    )
+            label = "p$offset",
+        )
+    }
     val stroke = 20f
     Canvas(Modifier.size(size)) {
         val scale = min(this.size.width, this.size.height) / 256f
@@ -187,7 +159,8 @@ fun RpiLoader(size: Dp = 96.dp, color: Color = Color(0xFF000000)) {
         val tops = listOf(40f, 72f, 104f)
         for (i in 0..2) {
             val path = uPath(tops[i], radii[i])
-            val pm = PathMeasure(path, false)
+            val pm = PathMeasure()
+            pm.setPath(path, false)
             val len = pm.length
             val dash = len / 4f           // dasharray:1 3 (pathLength=1)
             val phase = phases[i].value * len

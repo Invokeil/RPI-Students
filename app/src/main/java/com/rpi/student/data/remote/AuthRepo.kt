@@ -154,7 +154,7 @@ object AuthRepo {
     /** পুরনো ইউজার লগইন → profile doc তৈরি না থাকলে বানায়। */
     suspend fun ensureProfile(userId: String, email: String, entity: UserEntity?): Result<Profile> = runCatching {
         val existing = findMyProfile(userId)
-        if (existing != null) return existing
+        if (existing != null) return Result.success(existing)
         val e = entity ?: UserEntity(
             id = userId,
             email = email,

@@ -13,6 +13,7 @@ import com.rpi.student.data.local.UserEntity
 import com.rpi.student.data.remote.Appwrite
 import com.rpi.student.data.remote.AuthRepo
 import com.rpi.student.features.academic.AcademicHubScreen
+import com.rpi.student.features.academic.CalculatorsScreen
 import com.rpi.student.features.academic.CreditBrowserScreen
 import com.rpi.student.features.academic.ExamRoutineScreen
 import com.rpi.student.features.academic.ResultsScreen
