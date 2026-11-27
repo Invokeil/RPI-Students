@@ -4,7 +4,7 @@ on:
     branches: [ claude-redesign ]
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,3 +20,12 @@ jobs:
         with:
           name: RPI-Student-redesign-debug
           path: app/build/outputs/apk/debug/*.apk
+      - name: Draft pre-release (private, not OTA)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: redesign-debug-${{ github.run_number }}
+          name: redesign debug ${{ github.run_number }}
+          draft: true
+          prerelease: true
+          make_latest: false
+          files: app/build/outputs/apk/debug/*.apk
