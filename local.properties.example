@@ -1,0 +1,8 @@
+# local.properties.example → এই ফাইলকে `local.properties` নামে কপি করে value বসাও
+# (local.properties কখনো git-এ যাবে না — .gitignore এ আছে)
+
+# Appwrite — না দিলে default (sgp.cloud.appwrite.io / 6b091cf5002c71f31ffb) কোডে থাকে
+# APPWRITE_ENDPOINT=https://sgp.cloud.appwrite.io/v1
+# APPWRITE_PROJECT_ID=6b091cf5002c71f31ffb
+
+# sdk.dir=/path/to/Android/sdk   (Android Studio সাধারণত নিজেই লিখে দেয়)

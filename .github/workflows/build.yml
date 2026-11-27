@@ -1,0 +1,54 @@
+name: Build & Release APK
+
+# প্রতিটা push-এ (main) → signed release APK → GitHub Release → app-এর ভেতরে OTA update এটা পায়।
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle 8.9
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Build signed release APK
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: gradle assembleRelease --no-daemon --stacktrace
+
+      - name: Prepare APK
+        run: |
+          mkdir -p dist
+          cp app/build/outputs/apk/release/app-release.apk "dist/RPI-Student-v${GITHUB_RUN_NUMBER}.apk"
+          ls -la dist/
+
+      - name: Create GitHub Release (OTA source)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: v1.0.${{ github.run_number }} — OTA build
+          body: |
+            Auto build ${{ github.run_number }} — commit: ${{ github.event.head_commit.message }}
+            📱 ইনস্টল: APK নামাও (unknown sources allow) অথবা অ্যাপের ভেতরে Profile → Developer → Update চেক করো।
+          files: dist/*.apk
+          make_latest: true

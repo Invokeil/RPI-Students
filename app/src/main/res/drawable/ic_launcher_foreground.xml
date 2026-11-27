@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- logo.svg থেকে: ৩টা nested U-shape/arch — adaptive icon foreground (safe zone 66/108) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="256"
+    android:viewportHeight="256">
+    <group
+        android:pivotX="128"
+        android:pivotY="128"
+        android:scaleX="0.8"
+        android:scaleY="0.8">
+        <path
+            android:pathData="M44 40V128A84 84 0 0 0 212 128V40"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="20"
+            android:strokeLineCap="round"
+            android:fillColor="#00000000" />
+        <path
+            android:pathData="M72 72V128A56 56 0 0 0 184 128V72"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="20"
+            android:strokeLineCap="round"
+            android:fillColor="#00000000" />
+        <path
+            android:pathData="M100 104V128A28 28 0 0 0 156 128V104"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="20"
+            android:strokeLineCap="round"
+            android:fillColor="#00000000" />
+    </group>
+</vector>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- app_name / org_name gradle.properties থেকে resValue হিসেবে আসে —
+         এখানে ডুপ্লিকেট করা যাবে না। নাম বদলাতে চাইলে gradle.properties দেখো। -->
+    <string name="tagline">All-in-one student companion</string>
+</resources>
