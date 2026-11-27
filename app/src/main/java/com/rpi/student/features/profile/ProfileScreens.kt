@@ -110,7 +110,7 @@ private fun ProfileRow(label: String, value: String) {
 fun SettingsScreen(onBack: () -> Unit, onNavigate: (String) -> Unit) {
     SubScaffold(title = "Settings", onBack = onBack) { _ ->
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            Card(Modifier.fillMaxWidth(), onClick = { onNavigate("profile/edit-request") }) {
+            Card(onClick = { onNavigate("profile/edit-request") }, modifier = Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp)) {
                     Text("ব্যক্তিগত তথ্য পরিবর্তন", style = MaterialTheme.typography.titleMedium)
                     Text("OTP-verified change request", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
