@@ -136,8 +136,8 @@ fun ChatRoomScreen(groupId: String, onBack: () -> Unit) {
     LaunchedEffect(Unit) {
         AuthRepo.currentUserOrNull()?.let { (uid, email) ->
             myUserId = uid
-            AuthRepo.findMyProfile(uid)?.let { if (it.name.isNotBlank()) myName = it.name }
-                ?: run { myName = email.substringBefore("@") }
+            val profile = AuthRepo.findMyProfile(uid)
+            myName = profile?.name?.takeIf { it.isNotBlank() } ?: email.substringBefore("@")
         }
     }
 
